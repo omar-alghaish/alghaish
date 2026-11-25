@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { Home, Code2, Mail, Folder, BookOpen } from "lucide-react";
+import { Code2, Mail, Folder, BookOpen, Home } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { useGSAP } from "@gsap/react";
@@ -13,8 +13,6 @@ interface NavItem {
   key: "home" | "skills" | "contact" | "projects" | "blog";
   icon: typeof Home;
   barColor: string;
-  activeBg: string;
-  hoverColor: string;
 }
 
 const navItems: NavItem[] = [
@@ -23,32 +21,24 @@ const navItems: NavItem[] = [
     key: "skills",
     icon: Code2,
     barColor: "#0066FF",
-    activeBg: "#0066FF",
-    hoverColor: "#0066FF",
   },
   {
     href: "/contact",
     key: "contact",
     icon: Mail,
     barColor: "#FF0066",
-    activeBg: "#FF0066",
-    hoverColor: "#FF0066",
   },
   {
     href: "/projects",
     key: "projects",
     icon: Folder,
-   barColor: "#69f234",
-    activeBg: "#69f234",
-    hoverColor: "#69f234",
+    barColor: "#69f234",
   },
   {
     href: "/blog",
     key: "blog",
     icon: BookOpen,
     barColor: "#FFC107",
-    activeBg: "#FFC107",
-    hoverColor: "#FFC107",
   },
 ];
 
@@ -57,7 +47,7 @@ export function NavLinks({ className }: { className?: string }) {
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
 
-  // Stagger-animate each nav item on mount
+  // Stagger entrance on mount
   useGSAP(
     () => {
       if (!navRef.current) return;
@@ -65,47 +55,49 @@ export function NavLinks({ className }: { className?: string }) {
 
       gsap.fromTo(
         items,
-        { opacity: 0, x: -32 },
+        { opacity: 0, x: -28 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.5,
+          duration: 0.45,
           ease: "power3.out",
-          stagger: 0.1,
+          stagger: 0.08,
         }
       );
     },
     { scope: navRef }
   );
 
-  const handleMouseEnter = (el: HTMLElement, item: NavItem, isActive: boolean) => {
+  const handleMouseEnter = (el: HTMLElement, isActive: boolean) => {
     if (isActive) return;
-    gsap.to(el, {
-      backgroundColor: item.hoverColor,
-      paddingLeft: 16,
-      duration: 0.2,
-      ease: "power2.out",
-    });
     const bar = el.querySelector<HTMLElement>(".nav-bar");
-    if (bar) gsap.to(bar, { scaleY: 1.4, duration: 0.2 });
+    if (bar) {
+      gsap.killTweensOf(bar);
+      gsap.to(bar, {
+        width: "100%",
+        duration: 0.28,
+        ease: "power2.out",
+      });
+    }
   };
 
   const handleMouseLeave = (el: HTMLElement, isActive: boolean) => {
     if (isActive) return;
-    gsap.to(el, {
-      backgroundColor: "transparent",
-      paddingLeft: 0,
-      duration: 0.2,
-      ease: "power2.in",
-    });
     const bar = el.querySelector<HTMLElement>(".nav-bar");
-    if (bar) gsap.to(bar, { scaleY: 1, duration: 0.2 });
+    if (bar) {
+      gsap.killTweensOf(bar);
+      gsap.to(bar, {
+        width: "4px",
+        duration: 0.24,
+        ease: "power2.inOut",
+      });
+    }
   };
 
   return (
     <nav
       ref={navRef}
-      className={cn("flex flex-col gap-2.5 w-full  mt-8", className)}
+      className={cn("flex flex-col gap-2.5 w-full mt-8", className)}
       aria-label="Navigation Pages"
     >
       {navItems.map((item) => {
@@ -119,29 +111,30 @@ export function NavLinks({ className }: { className?: string }) {
           <Link
             key={item.href}
             href={item.href}
-            className={cn(
-              "nav-item flex items-center gap-3.5 py-2 cursor-pointer text-white font-bold tracking-wider text-xs md:text-sm uppercase rounded-none w-full",
-              // isActive && "px-4"
-            )}
-            // style={isActive ? { backgroundColor: item.activeBg } : {}}
+            className="nav-item relative flex items-center w-full py-2.5 px-3 overflow-hidden group cursor-pointer text-white font-bold tracking-wider text-xs md:text-sm uppercase rounded-none transition-transform active:scale-[0.99]"
             onMouseEnter={(e) =>
-              handleMouseEnter(e.currentTarget as HTMLElement, item, isActive)
+              handleMouseEnter(e.currentTarget as HTMLElement, isActive)
             }
             onMouseLeave={(e) =>
               handleMouseLeave(e.currentTarget as HTMLElement, isActive)
             }
           >
+            {/* Expanding colored bar: resting at 4px, animates to 100% on hover */}
             <span
-              className="nav-bar w-1 h-5 shrink-0 origin-center"
+              className="nav-bar absolute inset-y-0 ltr:left-0 rtl:right-0 pointer-events-none"
               style={{
                 backgroundColor: item.barColor,
-                // opacity: isActive ? 0 : 1,
+                width: isActive ? "100%" : "4px",
               }}
             />
-            <Icon size={16} className="text-white shrink-0" />
-            <span className="text-white font-bold tracking-wider">
-              {t(item.key).toUpperCase()}
-            </span>
+
+            {/* Content layered above the expanding bar */}
+            <div className="relative z-10 flex items-center gap-3.5 ltr:pl-1 rtl:pr-1">
+              <Icon size={16} className="text-white shrink-0" />
+              <span className="text-white font-bold tracking-wider">
+                {t(item.key).toUpperCase()}
+              </span>
+            </div>
           </Link>
         );
       })}

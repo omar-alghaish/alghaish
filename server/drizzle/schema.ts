@@ -64,6 +64,26 @@ export const project = pgTable("project", {
     .$onUpdate(() => new Date()),
 });
 
+export const course = pgTable("course", {
+  id: varchar("id", { length: 36 }).primaryKey(),
+  titleEn: varchar("title_en", { length: 255 }).notNull(),
+  titleAr: varchar("title_ar", { length: 255 }).notNull(),
+  provider: varchar("provider", { length: 255 }).notNull(), // e.g. CS50, Coursera, Meta, Udemy
+  descriptionEn: text("description_en").notNull(),
+  descriptionAr: text("description_ar").notNull(),
+  certificateUrl: text("certificate_url"),
+  courseUrl: text("course_url"),
+  skills: text("skills").array().notNull().default([]),
+  status: varchar("status", { length: 64 }).notNull().default("completed"), // completed | in-progress
+  issuedAt: varchar("issued_at", { length: 64 }),
+  order: integer("order").notNull().default(0),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
 export const contactMessage = pgTable("contact_message", {
   id: varchar("id", { length: 36 }).primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
@@ -76,4 +96,5 @@ export const contactMessage = pgTable("contact_message", {
 export type Profile = typeof profile.$inferSelect;
 export type Skill = typeof skill.$inferSelect;
 export type Project = typeof project.$inferSelect;
+export type Course = typeof course.$inferSelect;
 export type ContactMessage = typeof contactMessage.$inferSelect;
