@@ -49,6 +49,9 @@
     "author": "Written by Omar Alghaish",
     "share": "Share article",
     "all": "All",
-    "publishedOn": "Published on"
+    "publishedOn": "Published on",
+    "translatedWithGoogle": "Translated via Google Translate",
+    "viewOriginal": "Original (English)",
+    "viewTranslated": "Translated (Arabic)"
   }
 }

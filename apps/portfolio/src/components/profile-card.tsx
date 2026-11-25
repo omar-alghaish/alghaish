@@ -15,7 +15,7 @@ export async function ProfileCard({
   const user = await getGitHubUser();
 
   return (
-    <div className="w-full max-w-2xl ">
+    <div className="w-full ">
       <Reveal>
         <div className="mb-8 inline-block shadow-2xl">
           <div className="relative overflow-hidden">
@@ -41,7 +41,7 @@ export async function ProfileCard({
 
       {showBio && (
         <Reveal delay={0.2}>
-          <p className="text-gray-400 text-sm leading-6 max-w-md mb-6">
+          <p className="text-gray-400 text-sm leading-6  mb-6">
             {t("bio")}
           </p>
         </Reveal>

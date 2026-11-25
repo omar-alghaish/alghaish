@@ -19,14 +19,6 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    href: "/",
-    key: "home",
-    icon: Home,
-    barColor: "#0066FF",
-    activeBg: "#0066FF",
-    hoverColor: "#0066FF",
-  },
-  {
     href: "/skills",
     key: "skills",
     icon: Code2,
@@ -38,25 +30,25 @@ const navItems: NavItem[] = [
     href: "/contact",
     key: "contact",
     icon: Mail,
-    barColor: "#FFC107",
-    activeBg: "#FFAE00",
-    hoverColor: "#FFAE00",
+    barColor: "#FF0066",
+    activeBg: "#FF0066",
+    hoverColor: "#FF0066",
   },
   {
     href: "/projects",
     key: "projects",
     icon: Folder,
-    barColor: "#00E5FF",
-    activeBg: "#00B4D8",
-    hoverColor: "#00B4D8",
+   barColor: "#69f234",
+    activeBg: "#69f234",
+    hoverColor: "#69f234",
   },
   {
     href: "/blog",
     key: "blog",
     icon: BookOpen,
     barColor: "#FFC107",
-    activeBg: "#FFAE00",
-    hoverColor: "#FFAE00",
+    activeBg: "#FFC107",
+    hoverColor: "#FFC107",
   },
 ];
 
@@ -113,7 +105,7 @@ export function NavLinks({ className }: { className?: string }) {
   return (
     <nav
       ref={navRef}
-      className={cn("flex flex-col gap-2.5 w-full max-w-lg mt-8", className)}
+      className={cn("flex flex-col gap-2.5 w-full  mt-8", className)}
       aria-label="Navigation Pages"
     >
       {navItems.map((item) => {
@@ -129,9 +121,9 @@ export function NavLinks({ className }: { className?: string }) {
             href={item.href}
             className={cn(
               "nav-item flex items-center gap-3.5 py-2 cursor-pointer text-white font-bold tracking-wider text-xs md:text-sm uppercase rounded-none w-full",
-              isActive && "px-4"
+              // isActive && "px-4"
             )}
-            style={isActive ? { backgroundColor: item.activeBg } : {}}
+            // style={isActive ? { backgroundColor: item.activeBg } : {}}
             onMouseEnter={(e) =>
               handleMouseEnter(e.currentTarget as HTMLElement, item, isActive)
             }
@@ -143,7 +135,7 @@ export function NavLinks({ className }: { className?: string }) {
               className="nav-bar w-1 h-5 shrink-0 origin-center"
               style={{
                 backgroundColor: item.barColor,
-                opacity: isActive ? 0 : 1,
+                // opacity: isActive ? 0 : 1,
               }}
             />
             <Icon size={16} className="text-white shrink-0" />

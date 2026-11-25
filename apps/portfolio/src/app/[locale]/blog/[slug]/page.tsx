@@ -7,8 +7,9 @@ import { Reveal } from "@/components/reveal";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { Link } from "@/i18n/routing";
 import { Calendar, Clock, Tag, ChevronLeft, ChevronRight, Github } from "lucide-react";
-import { MarkdownContent } from "@/components/markdown-content";
+import { BlogArticleView } from "@/components/blog-article-view";
 import { getGitHubUser } from "@/lib/github";
+import { translateMarkdown } from "@/lib/translator";
 
 export const instant = false;
 
@@ -40,10 +41,15 @@ export default async function BlogPostPage({
   const isAr = locale === "ar";
   const BackIcon = isAr ? ChevronRight : ChevronLeft;
 
+  // Translate content to Arabic when on Arabic locale using Google Translate
+  const translatedArabicContent = isAr
+    ? await translateMarkdown(post.content, "ar")
+    : post.content;
+
   return (
     <>
       <TopControls />
-      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 py-16 bg-black text-white">
+      <main className="flex w-5xl m-auto flex-col justify-center px-6 sm:px-12 md:px-24 py-16 bg-black text-white">
         {/* Back Link */}
         <div className="pt-6 pb-8">
           <Link
@@ -120,10 +126,19 @@ export default async function BlogPostPage({
           </Reveal>
         </header>
 
-        {/* Article Body */}
+        {/* Article Body with Google Translate Support */}
         <article className="pt-8 pb-16">
           <Reveal delay={0.1}>
-            <MarkdownContent content={post.content} />
+            <BlogArticleView
+              originalContent={post.content}
+              translatedContent={translatedArabicContent}
+              isArabic={isAr}
+              labels={{
+                translatedWithGoogle: t("translatedWithGoogle"),
+                viewOriginal: t("viewOriginal"),
+                viewTranslated: t("viewTranslated"),
+              }}
+            />
           </Reveal>
         </article>
 
