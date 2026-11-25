@@ -1,0 +1,24 @@
+{
+  "name": "alghaish-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@12.3.4",
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "dev:portfolio": "pnpm --filter @alghaish/portfolio dev",
+    "dev:dashboard": "pnpm --filter @alghaish/dashboard dev",
+    "dev:server": "pnpm --filter @alghaish/server dev",
+    "build": "pnpm -r run build",
+    "build:portfolio": "pnpm --filter @alghaish/portfolio build",
+    "build:dashboard": "pnpm --filter @alghaish/dashboard build",
+    "build:server": "pnpm --filter @alghaish/server build",
+    "lint": "pnpm -r run lint",
+    "db:generate": "pnpm --filter @alghaish/server exec drizzle-kit generate",
+    "db:migrate": "pnpm --filter @alghaish/server exec drizzle-kit migrate",
+    "db:push": "pnpm --filter @alghaish/server exec drizzle-kit push",
+    "db:studio": "pnpm --filter @alghaish/server exec drizzle-kit studio"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

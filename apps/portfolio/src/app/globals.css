@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 9%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 9%;
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --primary: 262 83% 58%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 320 90% 55%;
+  --accent-foreground: 0 0% 100%;
+  --ring: 262 83% 58%;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 98%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 65%;
+  --card: 0 0% 6%;
+  --card-foreground: 0 0% 98%;
+  --border: 0 0% 14%;
+  --input: 0 0% 14%;
+  --primary: 262 83% 66%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 320 90% 62%;
+  --accent-foreground: 0 0% 100%;
+  --ring: 262 83% 66%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-ring: hsl(var(--ring));
+  --radius: var(--radius);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-arabic: var(--font-cairo), "Cairo", "Segoe UI", system-ui, sans-serif;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Arabic typography — Cairo: geometric, UI-optimised, correct line-height */
+[dir="rtl"] body,
+html[lang="ar"] body {
+  font-family: var(--font-arabic);
+  line-height: 1.7;
+  letter-spacing: 0;
+}
+
+/* Tighten heading line-height in Arabic */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3 {
+  line-height: 1.4;
+}
+
+/* Accent gradient for nav active states */
+.accent-home {
+  background: linear-gradient(180deg, #2563eb, #3b82f6);
+}
+.accent-skills {
+  background: linear-gradient(180deg, #7c3aed, #a855f7);
+}
+.accent-contact {
+  background: linear-gradient(180deg, #ec4899, #f472b6);
+}
+.accent-projects {
+  background: linear-gradient(180deg, #7c3aed, #ec4899);
+}
+
+/* Blog post prose */
+.blog-content h1, .blog-content h2, .blog-content h3 {
+  color: #fff;
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem;
+  line-height: 1.35;
+}
+.blog-content h1 { font-size: 1.5rem; }
+.blog-content h2 { font-size: 1.2rem; border-left: 3px solid #FFC107; padding-left: 0.75rem; }
+[dir="rtl"] .blog-content h2 { border-left: none; border-right: 3px solid #FFC107; padding-left: 0; padding-right: 0.75rem; }
+.blog-content h3 { font-size: 1rem; color: #d1d5db; }
+.blog-content p { color: #9ca3af; font-size: 0.9rem; line-height: 1.75; margin: 0.75rem 0; }
+.blog-content a { color: #FFC107; text-decoration: underline; }
+.blog-content a:hover { color: #fff; }
+.blog-content strong { color: #fff; font-weight: 700; }
+.blog-content em { color: #d1d5db; font-style: italic; }
+.blog-content code {
+  background: rgba(255,255,255,0.07);
+  color: #93c5fd;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.82em;
+  font-family: ui-monospace, monospace;
+}
+.blog-content .code-block {
+  margin: 1.5rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+}
+.blog-content .code-lang {
+  display: inline-block;
+  font-family: ui-monospace, monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #FFC107;
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+[dir="rtl"] .blog-content .code-lang {
+  border-right: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+.blog-content pre {
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin: 0;
+}
+.blog-content pre code { background: transparent; padding: 0; color: #67e8f9; font-size: 0.85rem; font-family: ui-monospace, monospace; }
+.blog-content blockquote {
+  border-left: 3px solid #FFC107;
+  padding-left: 1rem;
+  margin: 1.25rem 0;
+  color: #d1d5db;
+  font-style: italic;
+  background: rgba(255, 193, 7, 0.04);
+  padding: 0.5rem 1rem;
+}
+[dir="rtl"] .blog-content blockquote {
+  border-left: none;
+  border-right: 3px solid #FFC107;
+  padding-left: 0;
+  padding-right: 1rem;
+}
+.blog-content ul { list-style: none; padding: 0; margin: 0.75rem 0; }
+.blog-content li { color: #9ca3af; font-size: 0.9rem; padding: 0.25rem 0 0.25rem 1.25rem; position: relative; }
+[dir="rtl"] .blog-content li { padding: 0.25rem 1.25rem 0.25rem 0; }
+.blog-content li::before { content: "▸"; color: #FFC107; position: absolute; left: 0; }
+[dir="rtl"] .blog-content li::before { left: auto; right: 0; }
+.blog-content hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 2rem 0; }
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
