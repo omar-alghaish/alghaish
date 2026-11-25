@@ -3,6 +3,7 @@
     "home": "Home",
     "skills": "Skills",
     "projects": "Projects",
+    "courses": "Courses",
     "contact": "Contact",
     "blog": "Blog"
   },
@@ -23,6 +24,18 @@
     "subtitle": "Things I have built",
     "viewLive": "Live Demo",
     "viewCode": "Source Code"
+  },
+  "courses": {
+    "title": "Courses & Certifications",
+    "subtitle": "Continuous learning, specialized coursework, and verified certificates",
+    "provider": "Provider",
+    "issued": "Issued",
+    "status": "Status",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "viewCertificate": "Certificate",
+    "viewCourse": "Course Info",
+    "skillsLearned": "Key Topics & Skills"
   },
   "contact": {
     "title": "Get in Touch",

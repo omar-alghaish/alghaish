@@ -20,7 +20,7 @@ export default async function HomePage({
       <div className="absolute top-0 w-full h-20 z-50">
         <TopControls />
       </div>
-      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 bg-black text-white">
+      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 ">
         <ProfileCard showBio={true} showNav={true} />
       </main>
     </>

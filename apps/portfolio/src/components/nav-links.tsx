@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { Code2, Mail, Folder, BookOpen, Home } from "lucide-react";
+import { Code2, Mail, Folder, BookOpen, GraduationCap, Home } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { useGSAP } from "@gsap/react";
@@ -9,8 +9,8 @@ import gsap from "gsap";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
-  href: "/" | "/skills" | "/contact" | "/projects" | "/blog";
-  key: "home" | "skills" | "contact" | "projects" | "blog";
+  href: "/" | "/skills" | "/contact" | "/projects" | "/blog" | "/courses";
+  key: "home" | "skills" | "contact" | "projects" | "blog" | "courses";
   icon: typeof Home;
   barColor: string;
 }
@@ -23,22 +23,28 @@ const navItems: NavItem[] = [
     barColor: "#0066FF",
   },
   {
-    href: "/contact",
-    key: "contact",
-    icon: Mail,
-    barColor: "#FF0066",
-  },
-  {
     href: "/projects",
     key: "projects",
     icon: Folder,
     barColor: "#69f234",
   },
   {
+    href: "/courses",
+    key: "courses",
+    icon: GraduationCap,
+    barColor: "#A855F7",
+  },
+  {
     href: "/blog",
     key: "blog",
     icon: BookOpen,
     barColor: "#FFC107",
+  },
+  {
+    href: "/contact",
+    key: "contact",
+    icon: Mail,
+    barColor: "#FF0066",
   },
 ];
 
