@@ -29,12 +29,12 @@ export function ContactForm() {
   };
 
   const inputClass =
-    "w-full border border-white/10 bg-white/[0.03] px-4 py-2.5 text-white placeholder-gray-500 outline-none transition-colors focus:border-[#FFC107] text-sm";
+    "w-full border border-border bg-card px-4 py-2.5 text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-[#FFC107] text-sm";
 
   return (
     <form onSubmit={submit} className="space-y-4">
       <div>
-        <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-gray-300">
+        <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           {t("name")}
         </label>
         <input
@@ -48,7 +48,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-gray-300">
+        <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           <Mail className="mr-1 inline" size={13} />
           {t("email")}
         </label>

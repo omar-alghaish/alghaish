@@ -4,115 +4,150 @@ import { routing } from "@/i18n/routing";
 import { TopControls } from "@/components/top-controls";
 import { ProfileCard } from "@/components/profile-card";
 import { Reveal } from "@/components/reveal";
-import { getServerUrl } from "@/lib/server-api";
-import {
-  GraduationCap,
-  ExternalLink,
-  Award,
-  Calendar,
-  CheckCircle2,
-  Clock,
-  Sparkles,
-} from "lucide-react";
+import { CourseCard, CourseData } from "@/components/course-card";
+import { Sparkles } from "lucide-react";
 
 export const instant = false;
 
-interface CourseItem {
-  id: string;
-  titleEn: string;
-  titleAr: string;
-  provider: string;
-  descriptionEn: string;
-  descriptionAr: string;
-  certificateUrl?: string | null;
-  courseUrl?: string | null;
-  skills: string[];
-  status: "completed" | "in-progress" | string;
-  issuedAt?: string | null;
-  order?: number;
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
 }
 
-const DEFAULT_COURSES: CourseItem[] = [
+const DEFAULT_TAUGHT_COURSES: CourseData[] = [
   {
-    id: "cs50",
-    titleEn: "CS50: Introduction to Computer Science",
-    titleAr: "CS50: مقدمة في علوم الحاسب",
-    provider: "Harvard University",
+    id: "fullstack-bootcamp",
+    titleEn: "Full-Stack Web Development Bootcamp",
+    titleAr: "معسكر تطوير الويب المتكامل (Full-Stack Bootcamp)",
+    provider: "Tech Academy & Community",
+    roleEn: "Lead Instructor",
+    roleAr: "المحاضر الرئيسي",
     descriptionEn:
-      "Comprehensive computer science foundations covering algorithmic thinking, computational problem solving, memory management, data structures, and web technologies.",
+      "An intensive, project-driven bootcamp preparing developers for production engineering. Covers end-to-end web architecture from relational database modeling to modern React interfaces and deployment.",
     descriptionAr:
-      "أسس علوم الحاسب الشاملة التي تغطي التفكير الخوارزمي، وحل المشكلات الحسابية، وإدارة الذاكرة، وهياكل البيانات، وتطوير الويب.",
-    certificateUrl: "https://cs50.harvard.edu/certificates",
-    courseUrl: "https://pll.harvard.edu/course/cs50-introduction-computer-science",
-    skills: ["C", "Python", "SQL", "Algorithms", "Data Structures"],
-    status: "completed",
-    issuedAt: "2024",
+      "معسكر تدريبي مكثف يعتمد على إنجاز المشاريع العملية وتأهيل المتدربين لسوق العمل وهندسة البرمجيات الاحترافية، بدءاً من تصميم قواعد البيانات وحتى واجهات React الحديثة.",
+    durationEn: "60 Hours • 10 Weeks",
+    durationAr: "60 ساعة تدريبية • 10 أسابيع",
+    formatEn: "Live Interactive & Code Reviews",
+    formatAr: "تدريب عملي مباشر ومراجعة أكواد",
+    studentsCount: "120+ Graduates",
+    status: "active",
+    skills: ["React", "Node.js", "Express", "PostgreSQL", "Next.js", "Tailwind CSS"],
+    syllabusEn: [
+      "Modern Web Foundations & Semantic HTML5/CSS3 Architecture",
+      "JavaScript Deep Dive: Asynchronous Patterns, Event Loop, Closures",
+      "Frontend Engineering with React, Custom Hooks, and State Management",
+      "Backend Architecture with Node.js, Express, REST APIs, and JWT Auth",
+      "Relational Database Design with PostgreSQL & Drizzle ORM",
+      "Full-Stack Integration, CI/CD, and Cloud Deployment",
+    ],
+    syllabusAr: [
+      "أساسيات الويب الحديثة وهندسة واجهات HTML5 وCSS3",
+      "التعمق في جافاسكريبت: البرمجة غير المتزامنة ومفاهيم Event Loop والإغلاقات",
+      "تطوير الواجهات المتقدمة بـ React وإدارة الحالة وCustom Hooks",
+      "بناء الخوادم وهندسة الأنظمة الخلفية بـ Node.js وExpress وواجهات REST",
+      "تصميم قواعد البيانات العلائقية بـ PostgreSQL وDrizzle ORM",
+      "الربط المتكامل، النشر السحابي، وتدفقات CI/CD",
+    ],
+    audienceEn: "Aspiring software engineers, computer science students, and career switchers wanting industry-grade full-stack skills.",
+    audienceAr: "مهندسو البرمجيات المبتدئون وطلاب كليات الحاسب والراغبون في التحول المهني لتطوير الويب بمستويات احترافية.",
+    projectsBuiltEn: [
+      "Full-featured E-commerce Platform with Stripe checkout",
+      "Real-time Collaborative Task Management SaaS",
+      "Production-ready RESTful Authentication & Role Management API",
+    ],
+    projectsBuiltAr: [
+      "منصة تجارة إلكترونية متكاملة مع بوابات الدفع الإلكتروني",
+      "تطبيق لإدارة المهام التعاونية لحظياً بنظام SaaS",
+      "نظام مصادقة وإدارة صلاحيات آمن لمعايير الإنتاج",
+    ],
   },
   {
-    id: "meta-frontend",
-    titleEn: "Meta Front-End Developer Professional Certificate",
-    titleAr: "شهادة مطور الواجهات الأمامية المعتمدة من ميتا",
-    provider: "Meta",
+    id: "javascript-typescript-mastery",
+    titleEn: "Advanced JavaScript & TypeScript Architecture",
+    titleAr: "احتراف جافاسكريبت المتقدمة وهندسة TypeScript",
+    provider: "Developer Workshops",
+    roleEn: "Instructor",
+    roleAr: "المدرب والمحاضر",
     descriptionEn:
-      "Rigorous industry specialization covering advanced React, UI architecture, responsive design, testing with Jest, and modern state management patterns.",
+      "A specialized masterclass on building scalable, type-safe software. Emphasizes clean code, design patterns, robust typing, and asynchronous reliability.",
     descriptionAr:
-      "تخصص معتمد من ميتا يغطي أحدث تقنيات React وهندسة الواجهات والتصميم المتجاوب والاختبارات البرمجية وإدارة الحالة.",
-    certificateUrl: "https://coursera.org",
-    courseUrl: "https://www.coursera.org/professional-certificates/meta-front-end-developer",
-    skills: ["React", "JavaScript (ES6+)", "UI/UX", "Jest", "CSS3 / Tailwind"],
-    status: "completed",
-    issuedAt: "2024",
+      "دورة تخصصية متقدمة تركز على بناء برمجيات آمنة وقابلة للتوسع باستخدام TypeScript وكتابة كود نظيف وتطبيق أنماط التصميم البرمجي.",
+    durationEn: "30 Hours • 5 Weeks",
+    durationAr: "30 ساعة تدريبية • 5 أسابيع",
+    formatEn: "Hands-on Workshops & Exercises",
+    formatAr: "ورش تطبيقية وتمارين عملية",
+    studentsCount: "85+ Developers",
+    status: "upcoming",
+    skills: ["TypeScript", "JavaScript ESNext", "Generics", "Design Patterns", "Unit Testing"],
+    syllabusEn: [
+      "Advanced ESNext Features, Memory Management & Performance",
+      "TypeScript Type System: Generics, Conditional Types, Utility Types",
+      "Object-Oriented & Functional Programming Paradigms in TypeScript",
+      "Software Design Patterns applied to Web Applications",
+      "Automated Testing and Code Quality with Vitest and Jest",
+    ],
+    syllabusAr: [
+      "ميزات ESNext المتقدمة وإدارة الذاكرة وتحسين الأداء",
+      "نظام الأنواع في TypeScript: الأنواع المعممة (Generics) والشرطية",
+      "البرمجة كائنية التوجه والوظيفية في TypeScript",
+      "أنماط التصميم البرمجية (Design Patterns) وتطبيقاتها في الويب",
+      "الاختبارات الآلية وضمان جودة الكود باستخدام Vitest وJest",
+    ],
+    audienceEn: "Frontend and backend developers looking to level up their type-safety, code architecture, and engineering confidence.",
+    audienceAr: "مطورو الواجهات والخوادم الساعون لرفع كفاءة كتابة الأكواد والاعتماد على TypeScript في المشاريع الكبرى.",
+    projectsBuiltEn: [
+      "Type-safe State Store & Event Emitter Library",
+      "Enterprise Data Validation & Transformation Engine",
+    ],
+    projectsBuiltAr: [
+      "مكتبة مخصصة لإدارة الحالة وإطلاق الأحداث آمنة الأنواع",
+      "محرك لمعالجة وتحقق البيانات للمشاريع المؤسسية",
+    ],
   },
   {
-    id: "fullstack-open",
-    titleEn: "Full Stack Open: Modern Web Development",
-    titleAr: "Full Stack Open: تطوير الويب الحديث المتكامل",
-    provider: "University of Helsinki",
+    id: "react-nextjs-engineering",
+    titleEn: "Modern Frontend Engineering with React & Next.js",
+    titleAr: "هندسة الواجهات الحديثة بـ React وNext.js",
+    provider: "Tech Mentorship",
+    roleEn: "Instructor",
+    roleAr: "المدرب والمحاضر",
     descriptionEn:
-      "Deep dive into modern single page applications, Node.js and Express backends, RESTful APIs, TypeScript typing, and production CI/CD workflows.",
+      "Modern client and server web development using Next.js App Router, React Server Components (RSC), Partial Prerendering, and Tailwind CSS v4 styling.",
     descriptionAr:
-      "دراسة معمقة لتطبيقات الويب الحديثة، وبناء الخوادم بـ Node.js وExpress، وواجهات REST البرمجية، وTypeScript وتدفقات النشر المستمر.",
-    certificateUrl: "https://fullstackopen.com",
-    courseUrl: "https://fullstackopen.com/en",
-    skills: ["TypeScript", "Node.js", "Express", "REST APIs", "CI/CD"],
-    status: "completed",
-    issuedAt: "2024",
-  },
-  {
-    id: "web-bootcamp",
-    titleEn: "The Complete Web Development Bootcamp",
-    titleAr: "المعسكر التدريبي الشامل لتطوير الويب",
-    provider: "Udemy",
-    descriptionEn:
-      "Full-spectrum software engineering curriculum covering modern full-stack development, PostgreSQL database design, API integrations, and authentication.",
-    descriptionAr:
-      "منهج هندسي شامل لتطوير الويب المتكامل وتصميم قواعد بيانات PostgreSQL وتكامل واجهات البرمجة وأنظمة المصادقة.",
-    certificateUrl: "https://udemy.com",
-    courseUrl: "https://www.udemy.com",
-    skills: ["Full-Stack", "PostgreSQL", "Next.js", "Git / GitHub"],
-    status: "completed",
-    issuedAt: "2023",
+      "تطوير الواجهات الحديثة ومفاهيم React Server Components، وموجه التطبيقات في Next.js، والتصيير المسبق الجزئي، وتنسيقات Tailwind CSS v4.",
+    durationEn: "45 Hours • 7 Weeks",
+    durationAr: "45 ساعة تدريبية • 7 أسابيع",
+    formatEn: "Interactive Labs & Code Clinics",
+    formatAr: "مختبرات برمجية وعيادات كود",
+    studentsCount: "140+ Students",
+    status: "active",
+    skills: ["Next.js", "React 19", "Server Components", "Tailwind CSS v4", "SEO & Core Web Vitals"],
+    syllabusEn: [
+      "React Foundations, Reconciliation, and Hooks Architecture",
+      "Next.js App Router: Layouts, Server Components, Server Actions",
+      "Modern Styling Systems: Tailwind CSS v4 and Responsive UI",
+      "Internationalization (i18n), SEO Best Practices, and Web Vitals",
+      "Deployment, Edge/Serverless Computing, and Production Monitoring",
+    ],
+    syllabusAr: [
+      "أسس React المعمارية وهندسة الخطافات (Hooks)",
+      "موجه التطبيقات في Next.js: الصفحات والمكونات الخادمة والـ Server Actions",
+      "أنظمة التصميم الحديثة: Tailwind CSS v4 وتنسيق الشاشات المختلفة",
+      "تعدد اللغات (i18n)، تحسين محركات البحث SEO، وسرعة المواقع",
+      "النشر على الحوسبة السحابية ومراقبة الأداء في الإنتاج",
+    ],
+    audienceEn: "Web developers wanting to master Next.js and build lightning-fast web applications.",
+    audienceAr: "مطورو الويب الراغبون في احتراف Next.js وبناء تطبيقات فائقة السرعة وعالية الأداء.",
+    projectsBuiltEn: [
+      "High-Performance Multilingual Tech Blog & News Platform",
+      "SaaS Analytics Dashboard with Interactive Charts",
+    ],
+    projectsBuiltAr: [
+      "مدونة تقنية متعددة اللغات فائقة السرعة مع تحسين محركات البحث",
+      "لوحة تحكم إحصائية تفاعلية بنظام SaaS",
+    ],
   },
 ];
-
-async function getCourses(): Promise<CourseItem[]> {
-  try {
-    const url = getServerUrl("/api/courses");
-    const res = await fetch(url.toString(), {
-      next: { revalidate: 60 },
-      signal: AbortSignal.timeout(3000),
-    });
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        return data;
-      }
-    }
-  } catch {
-    // Fall back gracefully to curated courses
-  }
-  return DEFAULT_COURSES;
-}
 
 export default async function CoursesPage({
   params,
@@ -124,140 +159,39 @@ export default async function CoursesPage({
   setRequestLocale(locale);
 
   const t = await getTranslations("courses");
-  const isAr = locale === "ar";
-  const courses = await getCourses();
 
   return (
     <>
       <TopControls />
-      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 bg-black text-white">
+      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24">
         <ProfileCard showBio={false} showNav={false} />
 
         <div className="mt-12 max-w-4xl space-y-8">
           <Reveal>
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-bold tracking-wider uppercase text-white flex items-center gap-2">
+                <h2 className="text-lg font-bold tracking-wider uppercase text-foreground flex items-center gap-2">
                   <span className="w-1 h-4 bg-[#A855F7] inline-block" />
-                  {t("title")} ({courses.length})
+                  {t("title")} ({DEFAULT_TAUGHT_COURSES.length})
                 </h2>
-                <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider">
+                <p className="text-xs text-muted-foreground mt-1 uppercase tracking-wider">
                   {t("subtitle")}
                 </p>
               </div>
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono uppercase tracking-wider border border-[#A855F7]/30 bg-[#A855F7]/10 text-purple-300">
+              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono uppercase tracking-wider border border-[#A855F7]/30 bg-[#A855F7]/10 text-purple-700 dark:text-purple-300">
                 <Sparkles size={12} className="text-[#A855F7]" />
-                Verified
+                {t("leadInstructor")}
               </span>
             </div>
           </Reveal>
 
-          <div className="grid gap-5">
-            {courses.map((c, i) => {
-              const title = isAr ? c.titleAr || c.titleEn : c.titleEn;
-              const description = isAr
-                ? c.descriptionAr || c.descriptionEn
-                : c.descriptionEn;
-              const isCompleted = c.status === "completed";
-
-              return (
-                <Reveal key={c.id || i} delay={Math.min(0.3, i * 0.05)}>
-                  <div className="border border-white/10 bg-white/[0.02] p-5 sm:p-6 transition-all duration-300 hover:border-[#A855F7]/60 hover:bg-white/[0.04]">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="flex items-center gap-2">
-                        <span className="p-2 border border-[#A855F7]/30 bg-[#A855F7]/10 text-[#A855F7]">
-                          <GraduationCap size={18} />
-                        </span>
-                        <div>
-                          <div className="text-[11px] font-mono uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
-                            <Award size={12} />
-                            {c.provider}
-                          </div>
-                          <h3 className="text-base sm:text-lg font-bold text-white tracking-wide mt-0.5">
-                            {title}
-                          </h3>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        {c.issuedAt && (
-                          <span className="flex items-center gap-1 text-[11px] font-mono text-gray-400 border border-white/10 px-2 py-0.5">
-                            <Calendar size={11} />
-                            {c.issuedAt}
-                          </span>
-                        )}
-                        <span
-                          className={`flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 border ${
-                            isCompleted
-                              ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
-                              : "border-amber-500/40 bg-amber-500/10 text-amber-300"
-                          }`}
-                        >
-                          {isCompleted ? (
-                            <>
-                              <CheckCircle2 size={11} />
-                              {t("completed")}
-                            </>
-                          ) : (
-                            <>
-                              <Clock size={11} />
-                              {t("inProgress")}
-                            </>
-                          )}
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="mt-3.5 text-xs sm:text-sm text-gray-300 leading-relaxed">
-                      {description}
-                    </p>
-
-                    {c.skills && c.skills.length > 0 && (
-                      <div className="mt-4 pt-3 border-t border-white/10">
-                        <div className="text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-2">
-                          {t("skillsLearned")}:
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {c.skills.map((skill) => (
-                            <span
-                              key={skill}
-                              className="text-[10px] font-mono uppercase tracking-wider bg-white/5 border border-white/10 px-2 py-0.5 text-gray-300"
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="mt-5 pt-3 border-t border-white/10 flex flex-wrap items-center justify-end gap-3 text-xs">
-                      {c.courseUrl && (
-                        <a
-                          href={c.courseUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors font-mono text-[11px]"
-                        >
-                          <ExternalLink size={12} />
-                          {t("viewCourse")}
-                        </a>
-                      )}
-                      {c.certificateUrl && (
-                        <a
-                          href={c.certificateUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 border border-[#A855F7]/40 bg-[#A855F7]/10 hover:bg-[#A855F7]/20 text-purple-200 px-3 py-1 font-mono text-[11px] transition-colors"
-                        >
-                          <Award size={12} className="text-[#A855F7]" />
-                          {t("viewCertificate")}
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </Reveal>
-              );
-            })}
+          {/* List of Interactive Expandable Course Cards */}
+          <div className="grid gap-6">
+            {DEFAULT_TAUGHT_COURSES.map((course, i) => (
+              <Reveal key={course.id || i} delay={Math.min(0.3, i * 0.06)}>
+                <CourseCard course={course} locale={locale} />
+              </Reveal>
+            ))}
           </div>
         </div>
       </main>

@@ -23,12 +23,12 @@ export function TopControls() {
         <Link
           href="/"
           aria-label="Go back to home"
-          className="flex h-10 w-10 items-center justify-center bg-white/10 text-white transition-colors hover:bg-white/20 active:bg-white/30"
+          className="flex h-10 w-10 items-center justify-center bg-zinc-800/10 dark:bg-white/10 text-foreground dark:text-white transition-colors hover:bg-zinc-800/20 dark:hover:bg-white/20 active:bg-zinc-800/30 dark:active:bg-white/30 backdrop-blur-sm"
         >
           {isRtl ? (
-            <ChevronRight size={19} className="text-white" />
+            <ChevronRight size={19} className="text-current" />
           ) : (
-            <ChevronLeft size={19} className="text-white" />
+            <ChevronLeft size={19} className="text-current" />
           )}
         </Link>
       )}

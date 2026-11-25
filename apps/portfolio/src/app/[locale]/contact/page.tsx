@@ -5,7 +5,7 @@ import { TopControls } from "@/components/top-controls";
 import { ProfileCard } from "@/components/profile-card";
 import { getGitHubUser } from "@/lib/github";
 import { Reveal } from "@/components/reveal";
-import { Github, Twitter, Globe, MapPin } from "lucide-react";
+import { Github, Twitter } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 
 export const instant = false;
@@ -25,16 +25,16 @@ export default async function ContactPage({
   return (
     <>
       <TopControls />
-      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 bg-black text-white">
+      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24">
         <ProfileCard showBio={false} showNav={false} />
 
         <div className="mt-12 max-w-4xl space-y-10">
           <Reveal>
-            <h2 className="text-lg font-bold tracking-wider uppercase text-white flex items-center gap-2">
+            <h2 className="text-lg font-bold tracking-wider uppercase text-foreground flex items-center gap-2">
               <span className="w-1 h-4 bg-[#FFC107] inline-block" />
               {t("title")}
             </h2>
-            <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider">
+            <p className="text-xs text-muted-foreground mt-1 uppercase tracking-wider">
               {t("subtitle")}
             </p>
           </Reveal>
@@ -46,12 +46,12 @@ export default async function ContactPage({
                 href={user.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/10 bg-white/[0.02] p-4 flex items-center gap-3 transition-colors hover:border-[#FFC107] hover:bg-white/[0.05]"
+                className="border border-border bg-card p-4 flex items-center gap-3 transition-colors hover:border-[#FFC107] shadow-sm"
               >
                 <Github size={20} className="text-[#FFC107] shrink-0" />
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-gray-400">GitHub</div>
-                  <div className="text-sm font-semibold text-white">@{user.login}</div>
+                  <div className="text-xs uppercase tracking-wider text-muted-foreground">GitHub</div>
+                  <div className="text-sm font-semibold text-foreground">@{user.login}</div>
                 </div>
               </a>
 
@@ -60,46 +60,24 @@ export default async function ContactPage({
                   href={`https://twitter.com/${user.twitter_username}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border border-white/10 bg-white/[0.02] p-4 flex items-center gap-3 transition-colors hover:border-[#FFC107] hover:bg-white/[0.05]"
+                  className="border border-border bg-card p-4 flex items-center gap-3 transition-colors hover:border-[#FFC107] shadow-sm"
                 >
                   <Twitter size={20} className="text-[#FFC107] shrink-0" />
                   <div>
-                    <div className="text-xs uppercase tracking-wider text-gray-400">Twitter / X</div>
-                    <div className="text-sm font-semibold text-white">@{user.twitter_username}</div>
+                    <div className="text-xs uppercase tracking-wider text-muted-foreground">Twitter / X</div>
+                    <div className="text-sm font-semibold text-foreground">@{user.twitter_username}</div>
                   </div>
                 </a>
-              )}
-
-              {user.blog && (
-                <a
-                  href={`https://${user.blog}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-white/10 bg-white/[0.02] p-4 flex items-center gap-3 transition-colors hover:border-[#FFC107] hover:bg-white/[0.05]"
-                >
-                  <Globe size={20} className="text-[#FFC107] shrink-0" />
-                  <div>
-                    <div className="text-xs uppercase tracking-wider text-gray-400">Website</div>
-                    <div className="text-sm font-semibold text-white">{user.blog}</div>
-                  </div>
-                </a>
-              )}
-
-              {user.location && (
-                <div className="border border-white/10 bg-white/[0.02] p-4 flex items-center gap-3">
-                  <MapPin size={20} className="text-[#FFC107] shrink-0" />
-                  <div>
-                    <div className="text-xs uppercase tracking-wider text-gray-400">Location</div>
-                    <div className="text-sm font-semibold text-white">{user.location}</div>
-                  </div>
-                </div>
               )}
             </div>
           </Reveal>
 
-          {/* Working message form */}
+          {/* Contact Form */}
           <Reveal delay={0.2}>
-            <div className="border border-white/10 bg-white/[0.02] p-6 sm:p-8">
+            <div className="border border-border bg-card p-6 shadow-sm">
+              <h3 className="mb-6 text-sm font-bold uppercase tracking-wider text-foreground">
+                {t("title")}
+              </h3>
               <ContactForm />
             </div>
           </Reveal>

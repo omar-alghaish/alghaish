@@ -34,7 +34,7 @@ export function BlogArticleView({
     <div className="space-y-6">
       {/* Translation Banner when on Arabic locale */}
       {isArabic && (
-        <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 border border-[#FFC107]/20 bg-[#FFC107]/5 text-xs text-gray-300">
+        <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 border border-[#FFC107]/20 bg-[#FFC107]/5 text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
             <Languages size={15} className="text-[#FFC107] shrink-0" />
             <span className="font-mono text-[#FFC107]">
@@ -49,7 +49,7 @@ export function BlogArticleView({
               className={`px-2.5 py-1 transition-colors flex items-center gap-1 ${
                 !showOriginal
                   ? "bg-[#FFC107] text-black font-bold"
-                  : "bg-white/5 text-gray-400 hover:text-white"
+                  : "bg-muted text-muted-foreground hover:text-foreground"
               }`}
             >
               {!showOriginal && <Check size={11} />}
@@ -61,7 +61,7 @@ export function BlogArticleView({
               className={`px-2.5 py-1 transition-colors flex items-center gap-1 ${
                 showOriginal
                   ? "bg-[#FFC107] text-black font-bold"
-                  : "bg-white/5 text-gray-400 hover:text-white"
+                  : "bg-muted text-muted-foreground hover:text-foreground"
               }`}
             >
               {showOriginal && <Check size={11} />}

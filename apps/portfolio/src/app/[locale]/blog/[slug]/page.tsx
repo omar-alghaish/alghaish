@@ -49,12 +49,12 @@ export default async function BlogPostPage({
   return (
     <>
       <TopControls />
-      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 py-16 bg-black text-white">
+      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 py-16">
         {/* Back Link */}
         <div className="pt-6 pb-8">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-[#FFC107] transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-[#FFC107] transition-colors"
           >
             <BackIcon size={16} />
             {t("backToBlog")}
@@ -62,17 +62,17 @@ export default async function BlogPostPage({
         </div>
 
         {/* Article Header */}
-        <header className="pb-8 border-b border-white/10">
+        <header className="pb-8 border-b border-border">
           <Reveal>
             {/* Meta Row */}
-            <div className="flex flex-wrap items-center gap-3 text-xs text-gray-400 mb-4 font-mono">
+            <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-4 font-mono">
               {post.date && (
                 <span className="flex items-center gap-1.5">
                   <Calendar size={13} className="text-[#FFC107]" />
                   {post.date}
                 </span>
               )}
-              <span className="text-white/20">•</span>
+              <span className="text-border">•</span>
               <span className="flex items-center gap-1.5">
                 <Clock size={13} className="text-[#FFC107]" />
                 {post.readingTime} {t("minRead")}
@@ -80,7 +80,7 @@ export default async function BlogPostPage({
             </div>
 
             {/* Title */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground leading-tight mb-6">
               {isAr ? post.titleAr : post.title}
             </h1>
 

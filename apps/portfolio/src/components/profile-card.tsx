@@ -25,6 +25,7 @@ export async function ProfileCard({
               width={124}
               height={144}
               priority
+              unoptimized
               className="block object-cover aspect-[124/144]"
             />
             {/* Colorful RGB rainbow strip at the bottom of the photo */}
@@ -34,14 +35,14 @@ export async function ProfileCard({
       </Reveal>
 
       <Reveal delay={0.1}>
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-white mb-3 leading-snug">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-3 leading-snug">
           {t("greeting")} {t("name")}
         </h1>
       </Reveal>
 
       {showBio && (
         <Reveal delay={0.2}>
-          <p className="text-gray-400 text-sm leading-6  mb-6">
+          <p className="text-muted-foreground text-sm leading-6 mb-6">
             {t("bio")}
           </p>
         </Reveal>

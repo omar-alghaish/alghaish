@@ -117,7 +117,12 @@ export function NavLinks({ className }: { className?: string }) {
           <Link
             key={item.href}
             href={item.href}
-            className="nav-item relative flex items-center w-full py-2.5 px-3 overflow-hidden group cursor-pointer text-white font-bold tracking-wider text-xs md:text-sm uppercase rounded-none transition-transform active:scale-[0.99]"
+            className={cn(
+              "nav-item relative flex items-center w-full py-2.5 px-3 overflow-hidden group cursor-pointer font-bold tracking-wider text-xs md:text-sm uppercase rounded-none transition-transform active:scale-[0.99]",
+              isActive
+                ? "text-white"
+                : "text-foreground dark:text-zinc-100 group-hover:text-white"
+            )}
             onMouseEnter={(e) =>
               handleMouseEnter(e.currentTarget as HTMLElement, isActive)
             }
@@ -136,8 +141,23 @@ export function NavLinks({ className }: { className?: string }) {
 
             {/* Content layered above the expanding bar */}
             <div className="relative z-10 flex items-center gap-3.5 ltr:pl-1 rtl:pr-1">
-              <Icon size={16} className="text-white shrink-0" />
-              <span className="text-white font-bold tracking-wider">
+              <Icon
+                size={16}
+                className={cn(
+                  "shrink-0 transition-colors duration-200",
+                  isActive
+                    ? "text-white"
+                    : "text-foreground dark:text-zinc-100 group-hover:text-white"
+                )}
+              />
+              <span
+                className={cn(
+                  "font-bold tracking-wider transition-colors duration-200",
+                  isActive
+                    ? "text-white"
+                    : "text-foreground dark:text-zinc-100 group-hover:text-white"
+                )}
+              >
                 {t(item.key).toUpperCase()}
               </span>
             </div>

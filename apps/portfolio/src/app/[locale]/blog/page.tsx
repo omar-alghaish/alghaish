@@ -28,9 +28,9 @@ export default async function BlogPage({
   return (
     <>
       <TopControls />
-      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 py-16 bg-black text-white">
+      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 py-16">
         {/* Blog Header */}
-        <div className="pt-8 pb-10 border-b border-white/10">
+        <div className="pt-8 pb-10 border-b border-border">
           <Reveal>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-1.5 h-5 bg-[#FFC107] inline-block" />
@@ -38,10 +38,10 @@ export default async function BlogPage({
                 {t("title")}
               </span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-3">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-3">
               {isAr ? "كتابات وتجارب برمجية" : "Articles & Engineering Notes"}
             </h1>
-            <p className="text-sm sm:text-base text-gray-400 max-w-2xl leading-relaxed">
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl leading-relaxed">
               {t("subtitle")}
             </p>
           </Reveal>
@@ -56,7 +56,7 @@ export default async function BlogPage({
                 {allTags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 text-xs font-mono border border-white/10 bg-white/[0.02] text-gray-400"
+                    className="px-3 py-1 text-xs font-mono border border-border bg-muted text-muted-foreground"
                   >
                     #{tag}
                   </span>

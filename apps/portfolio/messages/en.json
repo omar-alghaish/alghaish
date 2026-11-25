@@ -26,16 +26,24 @@
     "viewCode": "Source Code"
   },
   "courses": {
-    "title": "Courses & Certifications",
-    "subtitle": "Continuous learning, specialized coursework, and verified certificates",
-    "provider": "Provider",
-    "issued": "Issued",
+    "title": "Courses & Workshops Taught",
+    "subtitle": "Technical bootcamps, masterclasses, and hands-on workshops instructed by Omar Alghaish",
+    "role": "Instructor",
+    "leadInstructor": "Lead Instructor",
     "status": "Status",
-    "completed": "Completed",
-    "inProgress": "In Progress",
-    "viewCertificate": "Certificate",
-    "viewCourse": "Course Info",
-    "skillsLearned": "Key Topics & Skills"
+    "active": "Enrollment Open",
+    "completed": "Completed Cohorts",
+    "upcoming": "Upcoming Session",
+    "viewDetails": "View Details",
+    "hideDetails": "Hide Details",
+    "syllabus": "Curriculum & Modules",
+    "audience": "Target Audience",
+    "projectsBuilt": "Hands-on Projects Built",
+    "topicsCovered": "Key Skills & Technologies",
+    "format": "Delivery Mode",
+    "duration": "Duration",
+    "inquire": "Enroll / Inquire",
+    "studentsTrained": "Students Trained"
   },
   "contact": {
     "title": "Get in Touch",
