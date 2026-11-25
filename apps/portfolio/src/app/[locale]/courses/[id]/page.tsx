@@ -4,21 +4,18 @@ import { routing } from "@/i18n/routing";
 import { TopControls } from "@/components/top-controls";
 import { Reveal } from "@/components/reveal";
 import { COURSES_DATA, getCourseById } from "@/lib/courses-data";
+import { CourseTabs } from "@/components/course-tabs";
 import { Link } from "@/i18n/routing";
 import {
   GraduationCap,
   Clock,
   Users,
   CheckCircle2,
-  BookOpen,
-  ArrowRight,
-  Code2,
   ChevronLeft,
   ChevronRight,
   Sparkles,
   Layers,
   Award,
-  Check,
   Send,
 } from "lucide-react";
 
@@ -56,11 +53,6 @@ export default async function CourseDetailPage({
   const duration = isAr ? course.durationAr : course.durationEn;
   const format = isAr ? course.formatAr : course.formatEn;
   const level = isAr ? course.levelAr : course.levelEn;
-  const audience = isAr ? course.audienceAr : course.audienceEn;
-  const syllabus = isAr ? course.syllabusAr : course.syllabusEn;
-  const projects = isAr ? course.projectsBuiltAr : course.projectsBuiltEn;
-  const prerequisites = isAr ? course.prerequisitesAr : course.prerequisitesEn;
-  const highlights = isAr ? course.highlightsAr : course.highlightsEn;
 
   const isActive = course.status === "active";
   const isUpcoming = course.status === "upcoming";
@@ -68,7 +60,7 @@ export default async function CourseDetailPage({
   return (
     <>
       <TopControls />
-      <main className="flex w-4xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-20 py-16">
+      <main className="flex w-6xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-16 py-16">
         {/* Breadcrumb Back Link */}
         <div className="pt-6 pb-6">
           <Link
@@ -136,106 +128,18 @@ export default async function CourseDetailPage({
           </Reveal>
         </header>
 
-        {/* Course Body Grid */}
-        <div className="pt-10 grid gap-10 md:grid-cols-3">
-          {/* Main Syllabus and Highlights (2 Columns) */}
-          <div className="md:col-span-2 space-y-10">
-            {/* Syllabus Modules */}
+        {/* Course Body Grid: Main Content Tabs (2 Cols) + Compact Sticky Sidebar (1 Col) */}
+        <div className="pt-10 grid gap-10 lg:grid-cols-3 items-start">
+          {/* Main Content with Interactive Tabs */}
+          <div className="lg:col-span-2">
             <Reveal delay={0.1}>
-              <div>
-                <h2 className="text-base font-bold tracking-wider uppercase text-foreground flex items-center gap-2 mb-6">
-                  <span className="w-1.5 h-4 bg-[#A855F7] inline-block" />
-                  {t("syllabus")}
-                </h2>
-
-                <div className="space-y-4">
-                  {syllabus.map((mod, idx) => (
-                    <div
-                      key={idx}
-                      className="border border-border bg-card p-5 shadow-sm transition-all hover:border-[#A855F7]/50"
-                    >
-                      <h3 className="text-sm sm:text-base font-bold text-foreground flex items-center gap-2.5 mb-3">
-                        <span className="w-6 h-6 rounded-full bg-[#A855F7]/10 text-[#A855F7] text-xs font-mono flex items-center justify-center shrink-0">
-                          {idx + 1}
-                        </span>
-                        {mod.title}
-                      </h3>
-
-                      <ul className="space-y-2 ltr:pl-8 rtl:pr-8">
-                        {mod.topics.map((topic, tidx) => (
-                          <li
-                            key={tidx}
-                            className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground leading-relaxed"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#A855F7] mt-1.5 shrink-0" />
-                            <span>{topic}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <CourseTabs course={course} locale={locale} />
             </Reveal>
-
-            {/* Hands-on Projects Built */}
-            <Reveal delay={0.2}>
-              <div>
-                <h2 className="text-base font-bold tracking-wider uppercase text-foreground flex items-center gap-2 mb-4">
-                  <span className="w-1.5 h-4 bg-[#00E5FF] inline-block" />
-                  {t("projectsBuilt")}
-                </h2>
-
-                <div className="grid gap-3">
-                  {projects.map((proj, pidx) => (
-                    <div
-                      key={pidx}
-                      className="border border-border bg-card p-4 flex items-start gap-3 shadow-sm"
-                    >
-                      <Code2 size={18} className="text-[#00E5FF] shrink-0 mt-0.5" />
-                      <div>
-                        <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground mb-0.5">
-                          {isAr ? `مشروع عملي 0${pidx + 1}` : `Practical Project 0${pidx + 1}`}
-                        </div>
-                        <div className="text-sm font-semibold text-foreground">{proj}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-
-            {/* Course Highlights */}
-            {highlights && highlights.length > 0 && (
-              <Reveal delay={0.25}>
-                <div>
-                  <h2 className="text-base font-bold tracking-wider uppercase text-foreground flex items-center gap-2 mb-4">
-                    <span className="w-1.5 h-4 bg-[#FFC107] inline-block" />
-                    {isAr ? "مميزات التدريب العملي" : "Learning Experience & Mentorship"}
-                  </h2>
-
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    {highlights.map((item, hidx) => (
-                      <div
-                        key={hidx}
-                        className="border border-border bg-card p-3.5 flex items-start gap-2.5 shadow-sm"
-                      >
-                        <Check size={16} className="text-[#FFC107] shrink-0 mt-0.5" />
-                        <span className="text-xs sm:text-sm text-muted-foreground">
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-            )}
           </div>
 
-          {/* Sticky Sidebar (1 Column) */}
-          <div className="space-y-6">
-            {/* Enrollment / Inquire Card */}
-            <div className="border border-border bg-card p-6 shadow-md sticky top-24">
+          {/* Clean Sticky Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="border border-border bg-card p-6 shadow-md lg:sticky lg:top-24">
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-purple-600 dark:text-purple-400 font-bold mb-2">
                 <Award size={16} />
                 {course.provider}
@@ -258,49 +162,12 @@ export default async function CourseDetailPage({
                   <span className="text-muted-foreground">{t("role")}:</span>
                   <span className="font-semibold text-foreground">{role}</span>
                 </div>
-              </div>
-
-              {/* Technologies Covered */}
-              <div className="py-5 border-b border-border">
-                <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground mb-2">
-                  {t("topicsCovered")}:
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t("status")}:</span>
+                  <span className="font-semibold text-purple-600 dark:text-purple-400 font-mono">
+                    {isActive ? t("active") : isUpcoming ? t("upcoming") : t("completed")}
+                  </span>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {course.skills.map((s) => (
-                    <span
-                      key={s}
-                      className="text-[11px] font-mono uppercase tracking-wider bg-muted border border-border px-2 py-0.5 text-foreground"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Target Audience & Prerequisites */}
-              <div className="py-5 border-b border-border text-xs space-y-3">
-                <div>
-                  <div className="font-mono uppercase tracking-wider text-muted-foreground mb-1">
-                    {t("audience")}:
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed">{audience}</p>
-                </div>
-
-                {prerequisites && prerequisites.length > 0 && (
-                  <div>
-                    <div className="font-mono uppercase tracking-wider text-muted-foreground mb-1.5">
-                      {isAr ? "المتطلبات المسبقة:" : "Prerequisites:"}
-                    </div>
-                    <ul className="space-y-1 text-muted-foreground">
-                      {prerequisites.map((p, idx) => (
-                        <li key={idx} className="flex items-start gap-1.5">
-                          <span className="text-[#A855F7]">•</span>
-                          <span>{p}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </div>
 
               {/* Primary Action Button */}
@@ -312,10 +179,10 @@ export default async function CourseDetailPage({
                   <Send size={14} />
                   {t("inquire")}
                 </Link>
-                <p className="text-[11px] text-center text-muted-foreground mt-2">
+                <p className="text-[11px] text-center text-muted-foreground mt-3 leading-relaxed">
                   {isAr
-                    ? "تواصل مباشرة للاستفسار عن مواعيد الأفواج القادمة أو ورش العمل الخاصة"
-                    : "Reach out directly for upcoming cohort dates or custom team workshops"}
+                    ? "تواصل مباشرة للاستفسار عن مواعيد الأفواج القادمة أو ورش العمل البرمجية للشركات والجامعات"
+                    : "Reach out directly for upcoming cohort schedules, syllabus inquiries, or custom engineering workshops"}
                 </p>
               </div>
             </div>
