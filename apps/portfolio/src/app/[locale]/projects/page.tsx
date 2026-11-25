@@ -24,7 +24,7 @@ export default async function ProjectsPage({
   return (
     <>
       <TopControls />
-      <main className="flex w-3xl m-auto flex-col justify-center px-6 sm:px-12 md:px-24 bg-black text-white">
+      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 bg-black text-white">
         <ProfileCard showBio={false} showNav={false} />
 
         <div className="mt-12 max-w-4xl space-y-8">
