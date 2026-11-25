@@ -43,7 +43,7 @@ export default async function BlogPostPage({
   return (
     <>
       <TopControls />
-      <main className="flex w-3xl ma m-auto flex-col justify-center px-6 sm:px-12 md:px-24 py-16 bg-black text-white">
+      <main className="flex w-3xl max-w-full m-auto flex-col justify-center px-6 sm:px-12 md:px-24 py-16 bg-black text-white">
         {/* Back Link */}
         <div className="pt-6 pb-8">
           <Link
