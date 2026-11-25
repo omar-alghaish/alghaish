@@ -13,32 +13,10 @@ import {
   ArrowRight,
   Code2,
   Sparkles,
+  ExternalLink,
 } from "lucide-react";
 import { Link } from "@/i18n/routing";
-
-export interface CourseData {
-  id: string;
-  titleEn: string;
-  titleAr: string;
-  provider: string; // Institution / Academy / Community
-  roleEn: string;
-  roleAr: string;
-  descriptionEn: string;
-  descriptionAr: string;
-  durationEn: string;
-  durationAr: string;
-  formatEn: string;
-  formatAr: string;
-  studentsCount?: string;
-  status: "active" | "completed" | "upcoming" | string;
-  skills: string[];
-  syllabusEn: string[];
-  syllabusAr: string[];
-  audienceEn: string;
-  audienceAr: string;
-  projectsBuiltEn: string[];
-  projectsBuiltAr: string[];
-}
+import { CourseData } from "@/lib/courses-data";
 
 interface CourseCardProps {
   course: CourseData;
@@ -90,7 +68,12 @@ export function CourseCard({ course, locale }: CourseCardProps) {
                 )}
               </div>
               <h3 className="text-lg sm:text-xl font-bold text-foreground tracking-wide mt-1">
-                {title}
+                <Link
+                  href={`/courses/${course.id}`}
+                  className="hover:text-[#A855F7] transition-colors"
+                >
+                  {title}
+                </Link>
               </h3>
             </div>
           </div>
@@ -146,29 +129,39 @@ export function CourseCard({ course, locale }: CourseCardProps) {
           </div>
         )}
 
-        {/* Card Footer: Toggle Details Button & Inquire Button */}
+        {/* Card Footer: Quick Preview & Full Course Page link & Inquire Button */}
         <div className="mt-6 pt-4 border-t border-border flex flex-wrap items-center justify-between gap-3">
-          <button
-            type="button"
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider font-bold text-[#A855F7] hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
-          >
-            {isOpen ? (
-              <>
-                <ChevronUp size={16} />
-                {t("hideDetails")}
-              </>
-            ) : (
-              <>
-                <ChevronDown size={16} />
-                {t("viewDetails")}
-              </>
-            )}
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider font-bold text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {isOpen ? (
+                <>
+                  <ChevronUp size={15} />
+                  {t("hideDetails")}
+                </>
+              ) : (
+                <>
+                  <ChevronDown size={15} />
+                  {t("viewDetails")}
+                </>
+              )}
+            </button>
+
+            <Link
+              href={`/courses/${course.id}`}
+              className="flex items-center gap-1 text-xs font-mono uppercase tracking-wider font-bold text-[#A855F7] hover:underline"
+            >
+              {isAr ? "صفحة الدورة الكاملة" : "Open Course Page"}
+              <ExternalLink size={12} />
+            </Link>
+          </div>
 
           <Link
             href="/contact"
-            className="flex items-center gap-1.5 border border-[#A855F7] bg-[#A855F7] text-white hover:bg-purple-700 px-4 py-1.5 font-mono text-xs uppercase tracking-wider transition-all"
+            className="flex items-center gap-1.5 border border-[#A855F7] bg-[#A855F7] text-white hover:bg-purple-700 px-4 py-1.5 font-mono text-xs uppercase tracking-wider transition-all shadow-sm"
           >
             {t("inquire")}
             <ArrowRight size={13} className="ltr:inline rtl:rotate-180" />
@@ -176,10 +169,10 @@ export function CourseCard({ course, locale }: CourseCardProps) {
         </div>
       </div>
 
-      {/* Expandable Accordion Drawer */}
+      {/* Expandable Accordion Drawer for fast inline overview */}
       {isOpen && (
         <div className="border-t border-border bg-muted/30 p-5 sm:p-6 space-y-5 animate-in fade-in-50 duration-200">
-          {/* Syllabus / Modules */}
+          {/* Syllabus Modules */}
           {syllabus && syllabus.length > 0 && (
             <div>
               <h4 className="text-xs font-mono uppercase tracking-wider font-bold text-foreground flex items-center gap-2 mb-3">
@@ -187,7 +180,7 @@ export function CourseCard({ course, locale }: CourseCardProps) {
                 {t("syllabus")}
               </h4>
               <ul className="space-y-2">
-                {syllabus.map((item, idx) => (
+                {syllabus.slice(0, 4).map((item, idx) => (
                   <li
                     key={idx}
                     className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground leading-relaxed"
@@ -195,7 +188,7 @@ export function CourseCard({ course, locale }: CourseCardProps) {
                     <span className="font-mono text-[#A855F7] text-xs font-bold mt-0.5 shrink-0">
                       0{idx + 1}.
                     </span>
-                    <span>{item}</span>
+                    <span>{typeof item === "string" ? item : item.title}</span>
                   </li>
                 ))}
               </ul>
@@ -223,17 +216,15 @@ export function CourseCard({ course, locale }: CourseCardProps) {
             </div>
           )}
 
-          {/* Target Audience */}
-          {audience && (
-            <div className="pt-3 border-t border-border">
-              <h4 className="text-xs font-mono uppercase tracking-wider font-bold text-foreground mb-1.5">
-                {t("audience")}
-              </h4>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                {audience}
-              </p>
-            </div>
-          )}
+          {/* View Full Page CTA */}
+          <div className="pt-3 border-t border-border flex justify-end">
+            <Link
+              href={`/courses/${course.id}`}
+              className="text-xs font-mono uppercase tracking-wider text-[#A855F7] font-bold hover:underline flex items-center gap-1.5"
+            >
+              {isAr ? "مشاهدة كافة المحاور والمشاريع في صفحة الدورة ←" : "View complete syllabus & project details on course page →"}
+            </Link>
+          </div>
         </div>
       )}
     </div>
